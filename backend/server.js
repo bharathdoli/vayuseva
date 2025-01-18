@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 
 app.use(cors({
   origin: ['http://localhost:3000',
-    'http://192.168.202.57:3000'
+    'https://vayuseva.netlify.app'
   ],
   methods:["GET","POST"],
 }));
