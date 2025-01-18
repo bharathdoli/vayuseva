@@ -22,7 +22,7 @@ const Navbar = () => {
       if (token) {
         try {
           setIsLoading(true);
-          const response = await axios.get("http://localhost:5000/api/auth/user", {
+          const response = await axios.get("https://vayuseva.onrender.com/api/auth/user", {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(response.data);
@@ -49,7 +49,7 @@ const Navbar = () => {
         setDonationsError(null); // Reset any previous errors
     
         // Fetch all donations from the backend
-        const response = await axios.get("http://localhost:5000/api/donations", {
+        const response = await axios.get("https://vayuseva.onrender.com/api/donations", {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

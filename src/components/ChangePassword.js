@@ -26,7 +26,7 @@ const ChangePassword = () => {
       setIsSubmitting(true);
       const token = localStorage.getItem('authToken');
       await axios.put(
-        'http://localhost:5000/api/auth/change-password',
+        'https://vayuseva.onrender.com/api/auth/change-password',
         { currentPassword, newPassword },
         {
           headers: { Authorization: `Bearer ${token}` },

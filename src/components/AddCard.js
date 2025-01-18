@@ -16,7 +16,7 @@ const AddCard = () => {
   useEffect(() => {
     const fetchDonations = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/donations");
+        const response = await axios.get("https://vayuseva.onrender.com/api/donations");
         setDonations(response.data);
       } catch (error) {
         console.error("Error fetching donations:", error);
@@ -25,7 +25,7 @@ const AddCard = () => {
 
     const fetchRequests = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/requests");
+        const response = await axios.get("https://vayuseva.onrender.com/api/requests");
         setRequests(response.data);
       } catch (error) {
         console.error("Error fetching requests:", error);
@@ -57,7 +57,7 @@ const AddCard = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/cards",
+        "https://vayuseva.onrender.com/api/cards",
         formData,
         {
           headers: {

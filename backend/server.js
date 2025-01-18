@@ -418,6 +418,8 @@ app.post("/api/auth/register", async (req, res) => {
 });
 
 // Login route
+// Trust the proxy for proper rate limiter behavior
+app.set("trust proxy", 1);
 app.post("/api/auth/login", loginLimiter, async (req, res) => {
   const { email, password } = req.body;
 
@@ -508,5 +510,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(5000, () => {
-  console.log('Server running on http://localhost:5000');
+  console.log('Server running on https://vayuseva.onrender.com');
 });

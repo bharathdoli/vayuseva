@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for your backend API
-const BASE_URL = "http://localhost:5000/api"; // Change to your server's URL
+const BASE_URL = "https://vayuseva.onrender.com/api"; // Change to your server's URL
 
 // Create an axios instance
 const api = axios.create({

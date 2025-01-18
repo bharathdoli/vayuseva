@@ -21,7 +21,7 @@ const Login = () => {
     setErrorMessage(""); 
     setIsSubmitting(true);// Reset error message on new submission
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", formData);
+      const response = await axios.post("https://vayuseva.onrender.com/api/auth/login", formData);
       const { token, user } = response.data; // Extract token and user from the response
       
       if (token) {

@@ -35,7 +35,7 @@ const Register = () => {
 
     // Submit to backend
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/register", formData);
+      const response = await axios.post("https://vayuseva.onrender.com/api/auth/register", formData);
       alert(response.data.message);
       setFormData({ name: "", email: "", password: "", role: "donor" });
     } catch (error) {

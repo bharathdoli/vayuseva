@@ -8,7 +8,7 @@ const AboutUs = () => {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/cards");
+        const response = await fetch("https://vayuseva.onrender.com/api/cards");
         if (!response.ok) throw new Error("Failed to fetch cards");
         const data = await response.json();
         console.log("Fetched cards:", data); // Log the fetched data

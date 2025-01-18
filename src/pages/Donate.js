@@ -13,7 +13,7 @@ const Donate = () => {
     const donationData = { category, description, email, phoneNumber };
 
     try {
-      const response = await fetch("http://localhost:5000/api/donations", {
+      const response = await fetch("https://vayuseva.onrender.com/api/donations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
