@@ -174,25 +174,27 @@ app.post('/api/cards', upload.single('thumbnail'), async (req, res) => {
 
 app.get('/api/cards', async (req, res) => {
   try {
-    const cards = await Card.find(); // Fetch all cards
-    const updatedCards = cards.map((card) => {
+    const cards = await Card.find().lean(); // Use lean() for performance
+    const uniqueCards = Array.from(new Map(cards.map(card => [card._id, card])).values()); // Ensure unique cards
+
+    const updatedCards = uniqueCards.map((card) => {
       if (card.thumbnail) {
-        // Convert binary data to base64 string
         const base64Thumbnail = card.thumbnail.data.toString('base64');
         return { 
-          ...card.toObject(), 
-          thumbnail: `data:image/jpeg;base64,${base64Thumbnail}`,
-          createdAt: card.createdAt,  // Include createdAt in the response
+          ...card, 
+          thumbnail: `data:${card.thumbnail.contentType};base64,${base64Thumbnail}` 
         };
       }
       return card;
     });
+
     res.json(updatedCards);
   } catch (error) {
     console.error('Error fetching cards:', error);
     res.status(500).send('Server Error');
   }
 });
+
 
 
 const sendDonationNotification = async (category, description, email, phoneNumber) => {

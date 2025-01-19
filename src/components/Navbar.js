@@ -48,7 +48,6 @@ const Navbar = () => {
         setIsFetchingDonations(true);
         setDonationsError(null); // Reset any previous errors
     
-        // Fetch all donations from the backend
         const response = await axios.get("https://vayuseva.onrender.com/api/donations", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -56,19 +55,9 @@ const Navbar = () => {
           },
         });
   
-        // Debugging logs
-        console.log("User Email:", user.email); // Log the user's email
-        console.log("Fetched Donations:", response.data); // Log the full donations array
-  
-        // Filter donations based on the logged-in user's email
         const filteredDonations = response.data.filter(
           (donation) => donation.email === user.email
         );
-  
-        // Log the filtered donations
-        console.log("Filtered Donations:", filteredDonations);
-  
-        // Set the filtered donations to the state
         setDonations(filteredDonations);
         setShowDonations(true); // Open the modal to display donations
       } catch (error) {
@@ -78,7 +67,7 @@ const Navbar = () => {
         setIsFetchingDonations(false);
       }
     }
-  };  
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -122,33 +111,36 @@ const Navbar = () => {
 
   return (
     <nav className="bg-teal-600 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-2xl font-semibold">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+        {/* Logo */}
+        <div className="text-white text-2xl font-semibold mb-4 md:mb-0 flex justify-between w-full md:w-auto">
           <Link to="/">Vayuseva</Link>
+
+          {/* Hamburger Menu (Only on mobile) */}
+          <button
+            className="block md:hidden text-white"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
         </div>
 
-        <button
-          className="block md:hidden text-white"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
-
+        {/* Menu Links (on Desktop & Mobile) */}
         <div className={`md:flex ${isOpen ? "block" : "hidden"} md:items-center`}>
-          <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 text-white">
+          <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 text-white text-left">
             <li>
               <Link to="/" className="hover:text-teal-200">
                 Home
@@ -207,7 +199,11 @@ const Navbar = () => {
                   <div
                     ref={dropdownRef}
                     className="absolute bg-white text-black mt-2 rounded shadow-lg w-60 z-50"
-                    style={{ top: "100%", right: 0 }}
+                    style={{
+                      top: "100%",
+                      left: "50%",
+                      transform: "translateX(-50%)", // Center the dropdown
+                    }}
                   >
                     <ul>
                       <li className="px-4 py-2 font-semibold border-b">
@@ -222,9 +218,7 @@ const Navbar = () => {
                       </li>
                       <li
                         className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => {
-                          fetchDonations();
-                        }}
+                        onClick={fetchDonations}
                       >
                         My Donations
                       </li>
@@ -245,7 +239,7 @@ const Navbar = () => {
 
       {showDonations && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-1/2">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-2xl">
             <h2 className="text-xl font-bold mb-4">My Donations</h2>
             {isFetchingDonations ? (
               <p>Loading donations...</p>
@@ -254,9 +248,9 @@ const Navbar = () => {
             ) : donations.length === 0 ? (
               <p>No donations found.</p>
             ) : (
-              <ul>
+              <ul className="space-y-4">
                 {donations.map((donation) => (
-                  <li key={donation._id} className="mb-2 border-b pb-2">
+                  <li key={donation._id} className="p-4 border rounded-md bg-gray-100">
                     <div>
                       <strong>Category:</strong> {donation.category}
                     </div>

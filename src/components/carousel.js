@@ -1,53 +1,68 @@
-// src/components/Carousel.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import image1 from '../assets/Screenshot 2024-12-11 215542.png';
-
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const Carousel = () => {
-  const carouselImages = [
-    image1,
-    image1,
-    image1,
-    image1
-  ];
+  const [carouselImages, setCarouselImages] = useState([]);
+
+  useEffect(() => {
+    const fetchCarouselImages = async () => {
+      try {
+        const response = await fetch('/api/cards');
+        const data = await response.json();
+
+        // Ensure only unique thumbnails
+        const uniqueImages = Array.from(new Set(data.map((card) => card.thumbnail)));
+        setCarouselImages(uniqueImages);
+      } catch (error) {
+        console.error('Error fetching carousel images:', error);
+      }
+    };
+
+    fetchCarouselImages();
+  }, []);
 
   const settings = {
-    dots: true, // Show dots navigation
-    infinite: true, // Infinite loop
-    speed: 500, // Speed of transition
-    slidesToShow: 1, // Show one slide at a time
-    slidesToScroll: 1, // Scroll one slide at a time
-    autoplay: true, // Enable auto play
-    autoplaySpeed: 2000, // Speed of autoplay
-    arrows: true, // Show arrows for navigation
+    dots: true,
+    infinite: false, // Disable infinite looping to avoid duplicate images
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    arrows: true,
     responsive: [
       {
-        breakpoint: 768, // For screens smaller than 768px
+        breakpoint: 768,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-        }
+        },
       },
       {
-        breakpoint: 1024, // For screens larger than 768px but smaller than 1024px
+        breakpoint: 1024,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
 
   return (
-    <div className="carousel-container">
-      <Slider {...settings}>
-        {carouselImages.map((image, index) => (
-          <div key={index}>
-            <img src={image} alt={`carousel-slide-${index}`} className="w-full h-auto" />
-          </div>
-        ))}
-      </Slider>
+    <div className="w-full max-w-4xl mx-auto py-8">
+      {carouselImages.length > 0 ? (
+        <Slider {...settings}>
+          {carouselImages.map((image, index) => (
+            <div key={index} className="flex justify-center items-center h-64 bg-gray-200 rounded-lg overflow-hidden">
+              <img src={image} alt={`carousel-slide-${index}`} className="w-full h-full object-cover" />
+            </div>
+          ))}
+        </Slider>
+      ) : (
+        <p className="text-center text-gray-500">No images available</p>
+      )}
     </div>
   );
 };
