@@ -201,7 +201,7 @@ const Navbar = () => {
                     className="absolute bg-white text-black mt-2 rounded shadow-lg w-60 z-50"
                     style={{
                       top: "100%",
-                      left: "50%",
+                      left: "0%",
                       transform: "translateX(-50%)", // Center the dropdown
                     }}
                   >
