@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import QR from '../assets/my oq.jpg';
+import QR from '../assets/vqr.jpg';
 
 const Donate = () => {
   const [category, setCategory] = useState("");
@@ -113,7 +113,7 @@ const Donate = () => {
           alt="QR Code for Donation"
           className="mx-auto mb-4 w-40 h-40 rounded-lg shadow-md"
         />
-        <p className="text-xl text-gray-800 font-semibold mb-6">UPI ID: 7993940534@ybl</p>
+        <p className="text-xl text-gray-800 font-semibold mb-6">UPI ID: thadakasaipraneeth10@okhdfcbank</p>
       </div>
     </div>
   );
