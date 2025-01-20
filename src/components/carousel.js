@@ -9,9 +9,12 @@ const Carousel = () => {
   useEffect(() => {
     const fetchCarouselImages = async () => {
       try {
-        const response = await fetch('/api/cards');
+        const response = await fetch('https://vayuseva.onrender.com/api/cards');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
-
+    
         // Ensure only unique thumbnails
         const uniqueImages = Array.from(new Set(data.map((card) => card.thumbnail)));
         setCarouselImages(uniqueImages);
@@ -19,6 +22,7 @@ const Carousel = () => {
         console.error('Error fetching carousel images:', error);
       }
     };
+    
 
     fetchCarouselImages();
   }, []);
